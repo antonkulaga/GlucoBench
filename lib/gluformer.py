@@ -205,7 +205,7 @@ if __name__ == '__main__':
                                                             output_chunk_length=out_len,
                                                             use_static_covariates=True,
                                                             array_output_only=True)
-            # build the NHiTSModel model
+            # build the Gluformer model
             model = Gluformer(d_model = d_model, 
                             n_heads = n_heads, 
                             d_fcn = d_fcn, 
