@@ -1,0 +1,2 @@
+model,ID RMSE/MAE,OOD RMSE/MAE
+output/models/anton/gluformer_1samples_400epochs_10heads_32batch_geluactivation_anton.pth,[50.002693  6.429722],[102.549286   9.064345]
