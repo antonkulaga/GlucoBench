@@ -176,9 +176,6 @@ def main(
                 f.write(f"model,ID RMSE/MAE,OOD RMSE/MAE\n")
 
 
-        model_path = dataset_models / f"nhits_{args.dataset}_pkl"
-        model.save(model_path)
-
         with metricsp.open("a") as f:
             f.write(f"{model_path},{id_errors_sample_red},{ood_errors_sample_red}\n")
 
