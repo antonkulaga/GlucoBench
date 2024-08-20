@@ -7,18 +7,15 @@ python3 ./lib/xgbtree.py --dataset livia --use_covs False --optuna False > ./out
 
 #these are original versions with seeds
 #python3 ./lib/nhits.py --dataset livia --use_covs False --optuna False > ./output/track_nhits_livia.txt 
-#pickle waiting
 #python3 ./lib/latentode.py --dataset livia --gpu_id 0 --optuna False > ./output/track_latentode_livia.txt
-#wanted to run with cuda but couldn't?????
 #python3 ./lib/transformer.py --dataset livia --use_covs False --optuna False > ./output/track_transformer_livia.txt
-# no gpu enableing found
 #python3 ./lib/gluformer.py --dataset livia --gpu_id 0 --optuna False > ./output/track_gluformer_livia.txt
-##no module torch.-six
+
 
 
 
 #these are seedless
-python3 ./lib/nhits_2.py --dataset livia --use_covs False > ./output/track_nhits_livia.txt 
+python3 ./lib/nhits_2.py --dataset livia --use-covs False > ./output/track_nhits_livia.txt 
 python3 ./lib/latentode_2.py --dataset livia --gpu_id 0 > ./output/track_latentode_livia.txt
 python3 ./lib/transformer_2.py --dataset livia --use_covs False > ./output/track_transformer_livia.txt
 python3 ./lib/gluformer_2.py --dataset livia --gpu_id 0 > ./output/track_gluformer_livia.txt

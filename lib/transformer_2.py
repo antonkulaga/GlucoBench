@@ -171,6 +171,6 @@ if __name__ == '__main__':
         f.write(f"OOD calibration errors: {ood_cal_errors_sample}\n")
         
         model_path = dataset_models / f"transformer_{args.dataset}_pkl"
-        model.save(model_path)
+        model.save(str(model_path))
         with metricsp.open("a") as f:
             f.write(f"{model_path},{id_errors_sample_red},{ood_errors_sample_red}\n")
