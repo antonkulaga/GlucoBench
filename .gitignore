@@ -1,7 +1,7 @@
 # ignore model and data files
-*.pth
-*.npy
-*.pkl
+#*.pth
+#*.npy
+#*.pkl
 cache/*
 *.out
 track_*
