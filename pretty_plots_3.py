@@ -82,6 +82,7 @@ forecasts, _ = glufo.predict(
     device='cuda',
     use_tqdm=True
 )
+print(forecasts.shape)
 forecasts = (forecasts - scalers['target'].min_) / scalers['target'].scale_
 trues = [dataset_test_glufo.evalsample(i) for i in range(len(dataset_test_glufo))]
 trues = scalers['target'].inverse_transform(trues)
@@ -97,7 +98,7 @@ sns.set_theme(style="whitegrid")
 fig, ax = plt.subplots(figsize=(10, 6))
 
 # Select a specific sample to plot
-ind = 100  # Example index
+ind = 10  # Example index
 samples = np.random.normal(
     loc=forecasts[ind, :, None],
     scale=1,

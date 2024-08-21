@@ -25,9 +25,9 @@ def main(dataset: str = 'livia_mini',
          reduction2: str = 'median',
          reduction3: Optional[str] = None,
          num_samples: int = 1,
-         epochs: int = 100,
-         n_heads: int = 12,
-         batch_size: int = 320,
+         epochs: int = 10000,
+         n_heads: int = 10,
+         batch_size: int = 32,
          activ: str = "gelu"):
 
     reductions = [reduction1, reduction2, reduction3]
@@ -122,7 +122,7 @@ def main(dataset: str = 'livia_mini',
     # Backtest on the test set
     predictions, logvar = model.predict(dataset_test,
                                         batch_size=batch_size,
-                                        num_samples=num_samples,
+                                        num_samples=3, #num_samples,
                                         device=device)
     trues = np.array([dataset_test.evalsample(i).values() for i in range(len(dataset_test))])
     trues = (trues - scalers['target'].min_) / scalers['target'].scale_
@@ -133,7 +133,7 @@ def main(dataset: str = 'livia_mini',
     # Backtest on the OOD test set
     predictions, logvar = model.predict(dataset_test_ood,
                                         batch_size=batch_size,
-                                        num_samples=num_samples,
+                                        num_samples=3, #=num_samples,
                                         device=device)
     trues = np.array([dataset_test_ood.evalsample(i).values() for i in range(len(dataset_test_ood))])
     trues = (trues - scalers['target'].min_) / scalers['target'].scale_
@@ -168,10 +168,13 @@ def main(dataset: str = 'livia_mini',
         f.write(f"ID calibration errors: {id_cal_errors_sample}\n")
         f.write(f"OOD calibration errors: {ood_cal_errors_sample}\n")
 
-        model_path = dataset_models / f"gluformer_{num_samples}samples_{epochs}epochs_{n_heads}heads_{batch_size}batch_{activ}activation_{dataset}.pth"
+        model_prefix = f"gluformer_{num_samples}samples_{epochs}epochs_{n_heads}heads_{batch_size}batch_{activ}activation_{dataset}"
+        model_path = dataset_models / f"{model_prefix}.pth"
         torch.save(model, str(model_path))
+        model_weights_path = dataset_models / f"{model_prefix}_weights.pth"
+        torch.save(model.state_dict(), str(model_weights_path))
 
-    # Write metrics if the file is not empty
+# Write metrics if the file is not empty
     if metricsp.stat().st_size == 0:
         with metricsp.open("a") as f:
             f.write(f"model,ID RMSE/MAE,OOD RMSE/MAE\n")
