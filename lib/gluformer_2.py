@@ -25,7 +25,7 @@ def main(dataset: str = 'livia_mini',
          reduction2: str = 'median',
          reduction3: Optional[str] = None,
          num_samples: int = 1,
-         epochs: int = 400,
+         epochs: int = 10000,
          n_heads: int = 10,
          batch_size: int = 32,
          activ: str = "gelu"):
@@ -168,10 +168,13 @@ def main(dataset: str = 'livia_mini',
         f.write(f"ID calibration errors: {id_cal_errors_sample}\n")
         f.write(f"OOD calibration errors: {ood_cal_errors_sample}\n")
 
-        model_path = dataset_models / f"gluformer_{num_samples}samples_{epochs}epochs_{n_heads}heads_{batch_size}batch_{activ}activation_{dataset}.pth"
+        model_prefix = f"gluformer_{num_samples}samples_{epochs}epochs_{n_heads}heads_{batch_size}batch_{activ}activation_{dataset}"
+        model_path = dataset_models / f"{model_prefix}.pth"
         torch.save(model, str(model_path))
+        model_weights_path = dataset_models / f"{model_prefix}_weights.pth"
+        torch.save(model.state_dict(), str(model_weights_path))
 
-    # Write metrics if the file is not empty
+# Write metrics if the file is not empty
     if metricsp.stat().st_size == 0:
         with metricsp.open("a") as f:
             f.write(f"model,ID RMSE/MAE,OOD RMSE/MAE\n")

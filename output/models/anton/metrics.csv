@@ -1,2 +1,9 @@
 model,ID RMSE/MAE,OOD RMSE/MAE
 output/models/anton/gluformer_1samples_400epochs_10heads_32batch_geluactivation_anton.pth,[50.002693  6.429722],[102.549286   9.064345]
+output/models/anton/gluformer_1samples_400epochs_12heads_32batch_geluactivation_anton.pth,[64.73648   7.286894],[96.8174    8.724411]
+output/models/anton/gluformer_1samples_1000epochs_12heads_32batch_geluactivation_anton.pth,[43.108624   5.9325504],[80.01495  8.01423]
+output/models/anton/gluformer_1samples_1000epochs_8heads_32batch_geluactivation_anton.pth,[50.466034   6.1536875],[102.34784    8.596779]
+output/models/anton/gluformer_1samples_1000epochs_10heads_32batch_geluactivation_anton.pth,[33.049713  5.198173],[75.561615   7.9206953]
+output/models/anton/gluformer_1samples_10000epochs_10heads_32batch_geluactivation_anton.pth,[32.709415   4.9117956],[74.24234   7.626928]
+output/models/anton/gluformer_1samples_10000epochs_8heads_32batch_geluactivation_anton.pth,[46.573174   6.0112247],[91.12083   8.261738]
+output/models/anton/gluformer_1samples_10000epochs_12heads_32batch_geluactivation_anton.pth,[30.954975  4.647257],[92.13504   8.363511]
