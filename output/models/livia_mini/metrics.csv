@@ -7,3 +7,4 @@ model,ID RMSE/MAE,OOD RMSE/MAE
 output/models/livia_mini/transformer_livia_mini_pkl,[259.9864    13.666268],[246.92435   13.388489]
 model,ID RMSE/MAE,OOD RMSE/MAE
 output/models/livia_mini/nhits_livia_mini_pkl,[145.08664   10.213789],[297.06372   14.983476]
+output/models/livia_mini/gluformer_1samples_10000epochs_10heads_32batch_geluactivation_livia_mini.pth,[398.03528  18.25449],[647.5248   22.99554]

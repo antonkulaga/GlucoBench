@@ -34,7 +34,7 @@ formatter, series, scalers = load_data(seed=0,
 formatter.params['gluformer'] = {
     'in_len': 96,  # example input length, adjust as necessary
     'd_model': 512,  # model dimension
-    'n_heads': 8,  # number of attention heads
+    'n_heads': 10,  # number of attention heads
     'd_fcn': 1024,  # fully connected layer dimension
     'num_enc_layers': 2,  # number of encoder layers
     'num_dec_layers': 2,  # number of decoder layers
@@ -70,8 +70,8 @@ glufo = Gluformer(
     num_dynamic_features=num_dynamic_features,
     num_static_features=num_static_features
 )
-#glufo.to('cuda')
-#glufo.load_state_dict(torch.load(f'./output/tensorboard_gluformer_{dataset}/model.pt', map_location=torch.device('cuda')))
+glufo.to('cuda')
+glufo.load_state_dict(torch.load(f'./output/tensorboard_gluformer_{dataset}/model.pt', map_location=torch.device('cuda')))
 
 # Get predictions
 print('Gluformer')
@@ -84,8 +84,13 @@ forecasts, _ = glufo.predict(
 )
 print(forecasts.shape)
 forecasts = (forecasts - scalers['target'].min_) / scalers['target'].scale_
+
 trues = [dataset_test_glufo.evalsample(i) for i in range(len(dataset_test_glufo))]
 trues = scalers['target'].inverse_transform(trues)
+
+trues = [ts.values() for ts in trues]  # Convert TimeSeries to numpy arrays
+trues = np.array(trues)
+
 inputs = [dataset_test_glufo[i][0] for i in range(len(dataset_test_glufo))]
 inputs = (np.array(inputs) - scalers['target'].min_) / scalers['target'].scale_
 
@@ -101,15 +106,16 @@ fig, ax = plt.subplots(figsize=(10, 6))
 ind = 10  # Example index
 
 samples = np.random.normal(
-    loc=forecasts[ind, :, None],
-    scale=1,
-    
-)
-samples = samples.reshape(samples.shape[0], samples.shape[1], -1)
+    loc=forecasts[ind, :],  # Mean (center) of the distribution
+    scale=0.1,  # Standard deviation (spread) of the distribution
+    size=(forecasts.shape[1], forecasts.shape[2])
+    )
+#samples = samples.reshape(samples.shape[0], samples.shape[1], -1)
+print ("samples",samples.shape)
 
 # Plot predictive distribution
 for point in range(samples.shape[0]):
-    kde = stats.gaussian_kde(samples[point, :, :])
+    kde = stats.gaussian_kde(samples[point,:])
     maxi, mini = 1.2 * np.max(samples[point, :]), 0.8 * np.min(samples[point, :])
     y_grid = np.linspace(mini, maxi, 200)
     x = kde(y_grid)
@@ -124,7 +130,7 @@ median = np.quantile(forecast, 0.5, axis=-1)
 ax.plot(np.arange(12), median, color='red', marker='o')
 
 # Plot true values
-#ax.plot(np.arange(-12, 12), np.concatenate([inputs[ind, -12:], trues[ind, :]]), color='blue')
+ax.plot(np.arange(-12, 12), np.concatenate([inputs[ind, -12:], trues[ind, :]]), color='blue')
 
 # Add labels and title
 ax.set_xlabel('Time (in 5 minute intervals)')

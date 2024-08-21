@@ -18,7 +18,7 @@ python3 ./lib/xgbtree.py --dataset livia --use_covs False --optuna False > ./out
 python3 ./lib/nhits_2.py --dataset livia --use-covs False > ./output/track_nhits_livia.txt 
 python3 ./lib/latentode_2.py --dataset livia --gpu_id 0 > ./output/track_latentode_livia.txt
 python3 ./lib/transformer_2.py --dataset livia --use_covs False > ./output/track_transformer_livia.txt
-python3 ./lib/gluformer_2.py --dataset livia --gpu_id 0 > ./output/track_gluformer_livia.txt
+python3 ./lib/gluformer_2.py --dataset livia_mini --gpu-id 0 > ./output/track_gluformer_livia.txt
 
 
 
